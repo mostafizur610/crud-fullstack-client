@@ -7,12 +7,12 @@ const UserList = () => {
     const employeeList = useLoaderData();
 
     const deleteEmployee = async (id) => {
-        await axios.delete(`http://localhost:5000/delete/${id}`);
+        await axios.delete(`https://crud-server-opal.vercel.app/delete/${id}`);
         navigate('/userlist');
     }
 
     const blockEmployee = async (id) => {
-        await axios.put(`http://localhost:5000/block`, { id: id });
+        await axios.put(`https://crud-server-opal.vercel.app/block`, { id: id });
 
         navigate('/userlist');
     }

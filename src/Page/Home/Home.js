@@ -22,7 +22,7 @@ const Home = () => {
     const formSubmit = async (e) => {
         e.preventDefault();
 
-        const employeeUpdate = await axios.post('http://localhost:5000/create', formValue);
+        const employeeUpdate = await axios.post('https://crud-server-opal.vercel.app/create', formValue);
         console.log(employeeUpdate.status);
         if (employeeUpdate.status === 201) {
             navigate("/userlist");

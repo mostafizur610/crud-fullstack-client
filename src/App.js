@@ -18,7 +18,7 @@ function App() {
         },
         {
           loader: async () => {
-            return await axios.get('http://localhost:5000');
+            return await axios.get('https://crud-server-opal.vercel.app');
           },
           path: '/userlist',
           element: <UserList></UserList>
@@ -27,7 +27,7 @@ function App() {
           path: '/details/:id',
           loader: async ({ params }) => {
             console.log(params);
-            return await axios.get(`http://localhost:5000/details/${params.id}`);
+            return await axios.get(`https://crud-server-opal.vercel.app/details/${params.id}`);
           },
           element: <List></List>
         }
