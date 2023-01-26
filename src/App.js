@@ -19,11 +19,11 @@ function App() {
           element: <Home></Home>
         },
         {
-          path: 'userlist/',
+          path: '/userlist',
           element: <UserList></UserList>
         },
         {
-          path: 'details/',
+          path: '/details',
           element: <List></List>
         }
       ]

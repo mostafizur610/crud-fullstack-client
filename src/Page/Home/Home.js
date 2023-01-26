@@ -42,7 +42,7 @@ const Home = () => {
                         </div>
 
                         <div className="form-control mt-6">
-                            <input className="btn btn-primary" type="submit" value="Create"/>
+                            <Link to='/userlist'><input className="btn btn-primary" type="submit" value="Create"/></Link>
                         </div>
                     </form>
                 </div>

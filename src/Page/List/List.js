@@ -29,10 +29,10 @@ const List = () => {
                     <tbody>
                     <tr>
                         <th>1</th>
-                        <td>Cy Ganderton</td>
-                        <td>Quality Control Specialist</td>
-                        <td>Quality Control Specialist</td>
-                        <td>Blue</td>
+                        <td>Mostafizur</td>
+                        <td>Rahman</td>
+                        <td>mostafizr.cse@gmail.com</td>
+                        <td>01752663049</td>
                     </tr>
                 
                     </tbody>
