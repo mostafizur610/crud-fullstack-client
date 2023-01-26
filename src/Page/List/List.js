@@ -1,42 +1,71 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const List = () => {
-    const [employee, setEmployee] = useState({});
-    const fetchEmployee = async() => {
-        const data = await axios.get('localhost:5000');
-        console.log(data);
-        setEmployee(data)
+    const employeeDetails = useLoaderData();
+    const navigate = useNavigate();
+    console.log(employeeDetails);
+
+    const [formValue, setFormValue] = useState({
+        id: employeeDetails.data.data._id,
+        firstName: employeeDetails.data.data.firstName,
+        lastName: employeeDetails.data.data.lastName,
+        email: employeeDetails.data.data.email,
+        phoneNumber: employeeDetails.data.data.phoneNumber
+    });
+
+    const formValueChange = (e) => {
+        setFormValue({ ...formValue, [e.target.name]: e.target.value });
     }
 
-    useEffect(()=>{
-        fetchEmployee()
-    }, []);
+    const formSubmit = async (e) => {
+        e.preventDefault();
+
+        const employeeUpdate = await axios.put('http://localhost:5000/update', formValue);
+        console.log(employeeUpdate.status);
+        if (employeeUpdate.status === 201) {
+            navigate("/userlist");
+        }
+    }
 
     return (
         <div>
             <div className="overflow-x-auto">
-                <table className="table w-full">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>1</th>
-                        <td>Mostafizur</td>
-                        <td>Rahman</td>
-                        <td>mostafizr.cse@gmail.com</td>
-                        <td>01752663049</td>
-                    </tr>
-                
-                    </tbody>
-                </table>
+                <form className="card-body" onSubmit={formSubmit}>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">First Name</span>
+                        </label>
+                        <input type="text" name='firstName' value={formValue.firstName} onInput={formValueChange} placeholder="your first name" className="input input-bordered" />
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Last Name</span>
+                        </label>
+                        <input type="text" name='lastName' value={formValue.lastName} onInput={formValueChange} placeholder="your last name" className="input input-bordered" />
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Email</span>
+                        </label>
+                        <input type="email" name='email' value={formValue.email} onInput={formValueChange} placeholder="email" className="input input-bordered" disabled />
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Phone Number</span>
+                        </label>
+                        <input type="text" name='phoneNumber' value={formValue.phoneNumber} onInput={formValueChange} placeholder="phone" className="input input-bordered" required />
+                    </div>
+
+                    <div className="form-control mt-3">
+                        <button className='btn btn-outline' type='submit'>Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     );

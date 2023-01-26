@@ -1,63 +1,57 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const UserList = () => {
+    const navigate = useNavigate();
+    const employeeList = useLoaderData();
+
+    const deleteEmployee = async (id) => {
+        await axios.delete(`http://localhost:5000/delete/${id}`);
+        navigate('/userlist');
+    }
+
+    const blockEmployee = async (id) => {
+        await axios.put(`http://localhost:5000/block`, { id: id });
+
+        navigate('/userlist');
+    }
+
     return (
         <div>
-        <div className="overflow-x-auto">
-            <table className="table w-full">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Details</th>
-                    <th>Block</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
+            <div className="overflow-x-auto">
+                <table className="table w-full">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Details</th>
+                            <th>Block</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                <tr>
-                    <th>1</th>
-                    <td>Mostafizur Rahman</td>
-                    <td><Link to='/details'><button className="btn btn-sm btn-outline btn-success">Details</button></Link></td>
-                    <td><button className="btn btn-sm btn-outline btn-success">Block</button></td>
+                    <tbody>
+                        {employeeList.data.data && employeeList.data.data.map((employee, index) => (
+                            <tr>
+                                <th>{index + 1}</th>
+                                <td>{employee.firstName} {employee.lastName}</td>
+                                <td><Link to={`/details/${employee._id}`}><button className="btn btn-sm btn-outline btn-success">Details</button></Link></td>
+                                <td>
+                                    <button className="btn btn-sm btn-outline btn-success" onClick={() => blockEmployee(employee._id)}>
+                                        {employee.isBlock ? 'Unblock' : 'Block'}
+                                    </button></td>
 
-                    <td>
-                        <button className="btn btn-circle btn-outline">
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-</button></td>
-                </tr>
-
-                <tr>
-                    <th>2</th>
-                    <td>Salman Rahman</td>
-                    <td><Link to='/details'><button className="btn btn-sm btn-outline btn-success">Details</button></Link></td>
-                    <td><button className="btn btn-sm btn-outline btn-success">unblock</button></td>
-
-                    <td>
-                        <button className="btn btn-circle btn-outline">
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-</button></td>
-                </tr>
-               
-                </tbody>
-
-                <tr>
-                    <th>3</th>
-                    <td>Saiful Islam</td>
-                    <td><Link to='/details'><button className="btn btn-sm btn-outline btn-success">Details</button></Link></td>
-                    <td><button className="btn btn-sm btn-outline btn-success">Block</button></td>
-
-                    <td>
-                        <button className="btn btn-circle btn-outline">
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-</button></td>
-                </tr>
-
-            </table>
+                                <td>
+                                    <button className="btn btn-circle btn-outline" onClick={() => deleteEmployee(employee._id)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    </button>
+                                </td>
+                            </tr>))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     );
 };
 

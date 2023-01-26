@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css'; 
+import axios from 'axios';
+import './App.css';
 import Main from './Layout/Main';
 import Home from './Page/Home/Home';
 import List from './Page/List/List';
@@ -13,17 +14,21 @@ function App() {
       children: [
         {
           path: '/',
-          // loader: async() => {
-          //   return await axios.get('localhost:5000')
-          // },
           element: <Home></Home>
         },
         {
+          loader: async () => {
+            return await axios.get('http://localhost:5000');
+          },
           path: '/userlist',
           element: <UserList></UserList>
         },
         {
-          path: '/details',
+          path: '/details/:id',
+          loader: async ({ params }) => {
+            console.log(params);
+            return await axios.get(`http://localhost:5000/details/${params.id}`);
+          },
           element: <List></List>
         }
       ]
