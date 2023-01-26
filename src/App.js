@@ -3,6 +3,7 @@ import './App.css';
 import Main from './Layout/Main';
 import Home from './Page/Home/Home';
 import List from './Page/List/List';
+import UserList from './Page/UserList/UserList';
 
 function App() {
   const router = createBrowserRouter([
@@ -18,7 +19,11 @@ function App() {
           element: <Home></Home>
         },
         {
-          path: 'list/',
+          path: 'userlist/',
+          element: <UserList></UserList>
+        },
+        {
+          path: 'details/',
           element: <List></List>
         }
       ]

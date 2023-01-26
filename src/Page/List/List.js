@@ -12,6 +12,7 @@ const List = () => {
     useEffect(()=>{
         fetchEmployee()
     }, []);
+
     return (
         <div>
             <div className="overflow-x-auto">
@@ -33,18 +34,7 @@ const List = () => {
                         <td>Quality Control Specialist</td>
                         <td>Blue</td>
                     </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>Hart Hagerty</td>
-                        <td>Desktop Support Technician</td>
-                        <td>Purple</td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td>Brice Swyre</td>
-                        <td>Tax Accountant</td>
-                        <td>Red</td>
-                    </tr>
+                
                     </tbody>
                 </table>
             </div>
